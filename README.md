@@ -15,19 +15,18 @@ This repository contains a suite of tools and scripts focused on data extraction
 
 This repository is organized into several key folders:
 
-- `Code`: This folder contains all the script files necessary for the data processing pipeline.
-  - `Netcdf_to_table`: A script that processes NetCDF files to extract and tabulate temperature data. [Link to Netcdf_to_table](path/to/Netcdf_to_table). This script is essential for converting complex NetCDF climate data into a more accessible table format, facilitating further analysis.
-  - _Many more scripts to come..._
+- `R_pipelines`: This folder contains all the script files necessary for the data processing pipeline.
+  - `Netcdf_to_table`: This folder contains the script that processes NetCDF files to extract and tabulate temperature data and a folder to store the dataset that the scripts will process. [Link to Netcdf_to_table](path/to/Netcdf_to_table).
+     - `Pipeline`: This folder contains the actual scripts. The scripts are essential for converting complex NetCDF climate data into a more accessible table format, facilitating further analysis.
+     - `Datasets`: **Place** your climate data files in this folder. It is set up to store datasets that the scripts in the folder will process
+- `Python_pipelines`:
 
-- `Datasets`: Place your climate data files in this folder. It is set up to store datasets that the scripts in the `Code` folder will process.
 
-### Prerequisites
+### Prerequisites for R pipelines
 
 Before you begin, ensure you have the following installed:
 - [R](https://www.r-project.org/)
 - Necessary R packages: `terra`, `sf`, `dplyr`, `tidyr`, `purrr`, `stringr`.
-
-Each script in the `Code` folder may have specific requirements and instructions, which are detailed within the script files themselves.
 
 ### Installation
 
@@ -35,4 +34,4 @@ Clone this repository to your local machine using:
 
 ```bash
 git clone https://github.com/your_username/Geospatial-Climate-Analysis.git
-``` 
+```
