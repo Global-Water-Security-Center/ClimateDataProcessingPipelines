@@ -35,3 +35,7 @@ Clone this repository to your local machine using:
 ```bash
 git clone https://github.com/your_username/Geospatial-Climate-Analysis.git
 ```
+
+#### Maintainers
+
+- Sambadi Majumder (smajumder1@ua.edu)
