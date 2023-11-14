@@ -16,7 +16,7 @@ This repository contains a suite of tools and scripts focused on data extraction
 This repository is organized into several key folders:
 
 - `R_pipelines`: This folder contains all the script files necessary for the data processing pipeline.
-  - `Netcdf_to_table`: This folder contains the script that processes NetCDF files to extract and tabulate temperature data and a folder to store the dataset that the scripts will process. [Link to Netcdf_to_table](path/to/Netcdf_to_table).
+  - `Netcdf_to_table`: This folder contains the script that processes NetCDF files to extract and tabulate temperature data and a folder to store the dataset that the scripts will process. [Link to Netcdf_to_table](https://github.com/Global-Water-Security-Center/ClimateDataProcessingPipelines/tree/main/R_pipelines/Netcdf_to_table).
      - `Pipeline`: This folder contains the actual scripts. The scripts are essential for converting complex NetCDF climate data into a more accessible table format, facilitating further analysis.
      - `Datasets`: **Place** your climate data files in this folder. It is set up to store datasets that the scripts in the folder will process
 - `Python_pipelines`:
