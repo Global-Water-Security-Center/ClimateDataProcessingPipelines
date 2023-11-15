@@ -23,6 +23,7 @@ geoRflow_raster_mask <- function(Spatraster, Spatvect, project_crs,
   # Mask the reprojected raster with the Spatvect
   Masked_raster <- terra::mask(Reprojected_raster, Spatvect)
   
+  
   # Return the masked raster
   return(Masked_raster)
 }
