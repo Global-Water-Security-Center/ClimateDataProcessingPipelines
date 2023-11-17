@@ -27,7 +27,7 @@ No additional installation is required other than the necessary Python libraries
 
 ## Usage
 
-To use the pipeline, simply call the function `cmip6_climate_data` with the appropriate parameters:
+To use the pipeline, simply call the function `cmip6_climate_data_download` with the appropriate parameters:
 
 **model**: Climate model name as a string (e.g., 'ACCESS-CM2')
 
@@ -47,7 +47,7 @@ To use the pipeline, simply call the function `cmip6_climate_data` with the appr
 
 ```python
 
-cmip6_climate_data(model = "ACCESS-CM2", timeframe = "historical",
+cmip6_climate_data_download(model = "ACCESS-CM2", timeframe = "historical",
                    ensemble = "r1i1p1f1", climate_variable = "pr",
                    start_year = 1950, end_year = 1952,
                    output_folder = "./output_folder")

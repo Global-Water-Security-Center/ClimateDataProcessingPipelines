@@ -19,16 +19,19 @@ This repository is organized into several key folders:
   - `Netcdf_to_table`: This folder contains the script that processes NetCDF files to extract and tabulate temperature data and a folder to store the dataset that the scripts will process. [Link to Netcdf_to_table](https://github.com/Global-Water-Security-Center/ClimateDataProcessingPipelines/tree/main/R_pipelines/Netcdf_to_table).
      - `Pipeline`: This folder contains the actual scripts. The scripts are essential for converting complex NetCDF climate data into a more accessible table format, facilitating further analysis.
      - `Datasets`: **Place** your climate data files in this folder. It is set up to store datasets that the scripts in the folder will process
+  - `cmip6_data_download`: This folder contains the R scripts designed to facilitate downloading of CMIP6 climate data. The scripts interface with the THREDDS Data Server, allowing users to specify parameters like climate model, timeframe, ensemble member, and desired climate variables, along with a year range for focused data retrieval. The folder may also include a README file providing detailed instructions and information about the usage and features of the script. [Link to cmip6_climate_data.py](https://github.com/Global-Water-Security-Center/ClimateDataProcessingPipelines/tree/main/Python_pipelines/cmip6_data_download/Pipeline)
+    - `Pipeline`: This folder contains the actual scripts.
+    - `Rasters`: A folder where the files will be downloaded
 - `Python_pipelines`:
-  - `cmip6_data_download`: This folder contains the Python script cmip6_climate_data.py, which contains the function for downloading climate data from the CMIP6 dataset. This script is designed to interface with the THREDDS Data Server, allowing users to specify parameters like climate model, timeframe, ensemble member, and desired climate variables, along with a year range for focused data retrieval. The folder may also include a README file providing detailed instructions and information about the usage and features of the script. [Link to cmip6_climate_data.py](https://github.com/Global-Water-Security-Center/ClimateDataProcessingPipelines/tree/main/Python_pipelines/cmip6_data_download/Pipeline)
-      - `Pipeline` : This folder contains the actual Python script
+  - `cmip6_data_download`: **This is the Python version of the R script which interfaces with the THREDDS data server, allowing for easy download of CMIP6 data**. This folder contains the Python script cmip6_climate_data.py, which contains the function for downloading climate data from the CMIP6 dataset. Just like it's R counterpart, the function within the script requires parameters like climate model, timeframe, ensemble member, and desired climate variables, along with a year range for focused data retrieval. The folder may also include a README file providing detailed instructions and information about the usage and features of the script. [Link to cmip6_climate_data.py](https://github.com/Global-Water-Security-Center/ClimateDataProcessingPipelines/tree/main/Python_pipelines/cmip6_data_download/Pipeline)
+    - `Pipeline` : This folder contains the actual Python script (both as a .py file and as a .ipynb notebook)
 
 
 ### Prerequisites for R pipelines
 
 Before you begin, ensure you have the following installed:
 - [R](https://www.r-project.org/)
-- Necessary R packages: `terra`, `sf`, `dplyr`, `tidyr`, `purrr`, `stringr`.
+- Necessary R packages: `terra`, `sf`, `dplyr`, `tidyr`, `purrr`, `stringr`,`httr`,`XML`,`stringr`,`here`
 
 
 ### Prerequisites for Python pipelines
