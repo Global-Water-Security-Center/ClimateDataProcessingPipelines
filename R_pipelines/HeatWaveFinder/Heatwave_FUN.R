@@ -1,8 +1,11 @@
-# Function to Look for Heatwaves in ERA5 Temp Data
+# Function to Look for Heatwaves in daily ERA5 Temp Data
 #Dataframe has columns x, y, days,and the variable for analysis
 #Temp_threshold is the temperature that indicates a heatwave
 #Day_Threshold is how many days in a row at the Temp_threshold indicates a heatwave
 #Variable is the number of the column in the Dataframe that you want to analyze, ie. MaxTemp or MeanTemp
+
+#The function returns a dataframe with columns titled x, y, and HeatwaveDays. 
+#x and y are locations from the input Dataframe and HeatwaveDays is the number of days that location was in a heatwave
 
 #Before you run the function you need to set your working directory 
 # and read in your dataframe
