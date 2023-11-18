@@ -36,7 +36,7 @@ Before you begin, ensure you have the following installed:
 
 ### Prerequisites for Python pipelines
 
-Make sure you have the latest version of Python installed (https://www.python.org/downloads/) along with an IDE (Spyder, VS Code, PyCharm etc)
+Make sure you have the latest version of **Python** installed (https://www.python.org/downloads/) along with an IDE (Spyder, VS Code, PyCharm etc)
 
 ### Installation
 
@@ -49,3 +49,5 @@ git clone https://github.com/your_username/Geospatial-Climate-Analysis.git
 #### Maintainers
 
 - Sambadi Majumder (smajumder1@ua.edu)
+- Kaitlin Kimmel-Hass (kakimmelhass@ua.edu)
+- Erin Menzies-Pluer (egmenziespluer@ua.edu)
