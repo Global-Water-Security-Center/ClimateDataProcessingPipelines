@@ -56,3 +56,66 @@ geoRflow_cmip6_climate_data_download(model = "ACCESS-ESM1-5", timeframe = "histo
                    timeout = 600)
 
 ```
+
+## WHAT HAPPENS UNDER THE HOOD
+
+### Building the URL to Access Data
+
+- **Creating a Specific Address:**
+  - `catalog_url <- paste0(...)`
+    - Imagine you're writing a letter and need an exact address. This line creates a precise web address (URL) to reach the data you want, combining different parts like the data model, time frame, etc.
+
+### Getting the Data from the Web
+
+- **Fetching the Data:**
+  - `catalog <- httr::GET(catalog_url)`
+    - This is like sending out a request to fetch a book from a specific library shelf using the address we just wrote.
+
+- **Checking if We Got the Book:**
+  - `if (httr::status_code(catalog) != 200) { stop(...) }`
+    - This checks if we successfully got the book. If not, it's like the librarian telling us the book isn't available.
+
+### Reading and Understanding the Book (XML Document)
+
+- **Translating the Book:**
+  - `doc <- XML::xmlParse(rawToChar(catalog$content))`
+    - This is like translating the book (the data) into a language we can understand.
+
+- **Finding Chapters on Specific Topics:**
+  - `urls <- XML::xpathSApply(doc, "//thredds:dataset", XML::xmlGetAttr, "urlPath", namespaces = c(thredds = "..."))`
+    - Now, we're looking for specific chapters (datasets) in our book.
+    - `//thredds:dataset` is like an instruction to find all chapters labeled 'dataset' under a specific category ('thredds').
+    - The `XML::xmlGetAttr` function is like asking for the page number of each chapter.
+
+- **Understanding the Category (Namespace):**
+  - `namespaces = c(thredds = "...")`
+    - This is like defining what we mean by 'thredds' category. It's a unique identifier that tells us we're looking at the right chapters.
+    - The URL `http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0` is used to specify this category, ensuring we're looking in the right section of our book.
+
+### Selecting the Right Chapters (Filtering Data)
+
+- **Setting Base for Data Files:**
+  - `base_url <- "https://ds.nccs.nasa.gov/thredds/fileServer/"`
+    - This sets the base location from where we'll actually pick up the data files.
+
+- **Choosing Chapters from Certain Years:**
+  - `pattern <- paste0("_(", paste(start_year:end_year, collapse = "|"), ")\\.nc")`
+    - It's like saying, "I want chapters from these specific years only."
+
+- **Applying Our Choice:**
+  - `filtered_urls <- urls[stringr::str_detect(urls, pattern)]`
+    - This step filters out just the chapters (URLs) we want based on the years we chose.
+
+### Bringing the Chapters Home (Downloading the Data)
+
+- **Setting a Time Limit for Downloads:**
+  - `options(timeout = timeout)`
+    - This sets a time limit to try and download each chapter, so we don't wait too long.
+
+- **Downloading Each Chapter:**
+  - `for (url_path in filtered_urls) {...}`
+    - This loop is like going through each selected chapter and bringing it home.
+
+- **Trying Multiple Times if Needed:**
+  - `while (!success && attempts < 3) {...}`
+    - If a chapter doesn't come home on the first try, we try up to two more times.

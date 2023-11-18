@@ -6,26 +6,37 @@ geoRflow_cmip6_climate_data_download <- function(model, timeframe, ensemble, cli
     dir.create(output_folder, recursive = TRUE)
   }
   
-  # Construct the catalog URL
+  # Construct the catalog URL to access the data
   catalog_url <- paste0("https://ds.nccs.nasa.gov/thredds/catalog/AMES/NEX/GDDP-CMIP6/", model, "/", timeframe, "/", ensemble, "/", climate_variable, "/catalog.xml")
   
-  # Retrieve the XML catalog
+  # Retrieve the XML catalog 
+  ## this step also stops the function if the link is broken
   catalog <- httr::GET(catalog_url)
   if (httr::status_code(catalog) != 200) {
     stop("Failed to retrieve the catalog.")
   }
   
   # Parse the XML
-  doc <- XML::xmlParse(rawToChar(catalog$content))
+  
+  ### this step translates the raw content of catalog into a format that the computer can read (the result is a parsed XML document)
+  doc <- XML::xmlParse(rawToChar(catalog$content))  
+  
+  ### This searches the entire translated/parsed XML document and unearths //thredds:dataset. This is relevant to THREDDS
   urls <- XML::xpathSApply(doc, "//thredds:dataset", XML::xmlGetAttr, "urlPath", namespaces = c(thredds = "http://www.unidata.ucar.edu/namespaces/thredds/InvCatalog/v1.0"))
+  
+  #### All information is coerced into characters
   urls <- as.character(urls)  # Coerce to character vector
   
   # Filter URLs by year range
   base_url <- "https://ds.nccs.nasa.gov/thredds/fileServer/"
+  
+  ## construcing patterns for each file to be downloaded
   pattern <- paste0("_(", paste(start_year:end_year, collapse = "|"), ")\\.nc")
+  
   filtered_urls <- urls[stringr::str_detect(urls, pattern)]
   
   # Download each file
+  ## tries 3 times to download a file 
   options(timeout = timeout)  # Increase timeout to 10 minutes
   for (url_path in filtered_urls) {
     file_url <- paste0(base_url, url_path)
