@@ -1,6 +1,6 @@
 
 
-geoRflow_cmip6_climate_data_download <- function(model, timeframe, ensemble, climate_variable, start_year, end_year, output_folder,timeout) {
+geoRflow_cmip6_data_download <- function(model, timeframe, ensemble, climate_variable, start_year, end_year, output_folder,timeout) {
   # Ensure the output directory exists
   if (!dir.exists(output_folder)) {
     dir.create(output_folder, recursive = TRUE)
@@ -58,4 +58,46 @@ geoRflow_cmip6_climate_data_download <- function(model, timeframe, ensemble, cli
       cat("Failed to download", file_name, "\n")
     }
   }
+}
+
+
+
+
+geoRflow_cmip6_spatial_subset_download <- function(model, timeframe, ensemble, climate_variable, start_year, end_year, north, south, east, west, output_folder, timeout) {
+  # Ensure the output directory exists
+  if (!dir.exists(output_folder)) {
+    dir.create(output_folder, recursive = TRUE)
+  }
+  
+  # Base URL for the NetCDF Subset Service (NCSS)
+  ncss_base_url <- paste0("https://ds.nccs.nasa.gov/thredds/ncss/grid/AMES/NEX/GDDP-CMIP6/", model, "/", timeframe, "/", ensemble, "/", climate_variable, "/")
+  
+  # Spatial subset and time parameters
+  spatial_params <- paste0("?var=", climate_variable, "&north=", north, "&south=", south, "&east=", east, "&west=", west, "&horizStride=1")
+  time_params <- "&time_start=<YEAR>-01-01T00:00:00Z&time_end=<YEAR>-12-31T23:59:59Z"
+  format_params <- "&accept=netcdf3&addLatLon=true"
+  
+  # Loop through years and construct the URL for each file
+  for (year in start_year:end_year) {
+    # Replace <YEAR> with the actual year in the time parameters
+    year_time_params <- gsub("<YEAR>", year, time_params)
+    
+    # Construct the final URL
+    ncss_url <- paste0(ncss_base_url, climate_variable, "_day_", model, "_", timeframe, "_", ensemble, "_gn_", year, ".nc", spatial_params, year_time_params, format_params)
+    
+    # Download the file
+    file_name <- paste0(model, "_", climate_variable, "_", year, ".nc")
+    file_path <- file.path(output_folder, file_name)
+    download_file(ncss_url, file_path, timeout)
+  }
+}
+
+download_file <- function(url, path, timeout) {
+  options(timeout = timeout)
+  tryCatch({
+    download.file(url, path, mode = "wb")
+    message("Downloaded: ", path)
+  }, error = function(e) {
+    message("Failed to download: ", path, "\nError: ", e$message)
+  })
 }

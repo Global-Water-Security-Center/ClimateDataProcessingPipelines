@@ -2,15 +2,19 @@
 
 ## Overview
 
-This R-based pipeline facilitates the efficient downloading of climate data from the CMIP6 (Coupled Model Intercomparison Project Phase 6) dataset. It is designed to help researchers, climate scientists, and data analysts easily access and organize climate data specific to their needs. The pipeline interfaces with the THREDDS Data Server provided by NASA's NCCS (NASA Center for Climate Simulation) to access the NEX-GDDP-CMIP6 data collection.
+This R-based pipeline facilitates the efficient downloading of climate data from the CMIP6 (Coupled Model Intercomparison Project Phase 6) dataset at both global and local scale. It is designed to help researchers, climate scientists, and data analysts easily access and organize climate data specific to their needs. The pipeline interfaces with the THREDDS Data Server provided by NASA's NCCS (NASA Center for Climate Simulation) to access the NEX-GDDP-CMIP6 data collection.
 
 ## Features
 
 - **Custom Data Retrieval**: Specify climate model, timeframe, ensemble member, and climate variable.
+- **Spatial Subsetting**: In addition downloading data based on a geographic bounding box is also possible
 - **Year Range Selection**: Focus on specific years to streamline the data collection process.
 - **Automated Batch Downloading**: Download multiple files automatically, saving time and effort.
 - **Organized Data Storage**: Specify output folders for easy data management and access.
 - **User-Friendly**: Simple and clear for users with basic to advanced programming skills.
+
+The `geoRflow_cmip6_data_download` enables the user to download data for the entire spatial extent which the dataset covers (usually global) and the `geoRflow_cmip6_spatial_subset_download` helps the user download the data based on a specific bounding box
+
 
 ## Data Source
 
@@ -27,7 +31,7 @@ No additional installation is required other than the necessary R libraries. Ens
 
 ## Usage
 
-To use the pipeline, simply call the function `geoRflow_cmip6_climate_data_download` with the appropriate parameters:
+To use the pipeline, simply call the function `geoRflow_cmip6_data_download` or `geoRflow_cmip6_spatial_subset_download` with the appropriate parameters:
 
 **model**: Climate model name as a string (e.g., 'ACCESS-ESM1-5')
 
@@ -45,11 +49,15 @@ To use the pipeline, simply call the function `geoRflow_cmip6_climate_data_downl
 
 **timeout (int)**: An integer specifying the seconds to timeout the download process (the default is 600 seconds)
 
+**north, south, east, west:** Coordinates of the bounding box. (only for `geoRflow_cmip6_spatial_subset_download`)
+
 ## For example
+
+To download global data
 
 ```{r}
 
-geoRflow_cmip6_climate_data_download(model = "ACCESS-ESM1-5", timeframe = "historical",
+geoRflow_cmip6_data_download(model = "ACCESS-ESM1-5", timeframe = "historical",
                    ensemble = "r1i1p1f1", climate_variable = "tasmax",
                    start_year = 1990, end_year = 1992,
                    output_folder = here("Rasters"),
@@ -57,7 +65,30 @@ geoRflow_cmip6_climate_data_download(model = "ACCESS-ESM1-5", timeframe = "histo
 
 ```
 
-## WHAT HAPPENS UNDER THE HOOD
+To download data based on a specific bounding box
+
+```{r}
+
+### defining the north, south, east and west of the bounding box ###
+
+North_latitude <- 40.0
+South_latitude <- 12.0
+West_longitude <-  25.0
+East_longitude <- 60.0
+
+
+
+geoRflow_cmip6_spatial_subset_download(model = "ACCESS-ESM1-5", timeframe = "historical",
+                                    ensemble = "r1i1p1f1", climate_variable = "tasmax",
+                                    start_year = 1990, end_year = 1991,
+                                    north = North_latitude, south= South_latitude,
+                                    east= East_longitude, west= West_longitude,
+                                    output_folder = here("Rasters"),
+                                    timeout = 600)
+
+```
+
+## WHAT HAPPENS UNDER THE HOOD (geoRflow_cmip6_data_download function)
 
 ### Building the URL to Access Data
 
