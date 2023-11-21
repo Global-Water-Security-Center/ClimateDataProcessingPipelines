@@ -29,8 +29,8 @@ East_longitude <- 60.0
 
 
 
-geoRflow_cmip6_spatial_subset_download(model = "ACCESS-ESM1-5", timeframe = "historical", 
-                                    ensemble = "r1i1p1f1", climate_variable = "tasmax", 
+geoRflow_cmip6_spatial_subset_download(model = "CNRM-ESM2-1", timeframe = "historical", 
+                                    ensemble = "r1i1p1f2", climate_variable = "tasmax", 
                                     start_year = 1990, end_year = 1991,
                                     north = North_latitude, south= South_latitude, 
                                     east= East_longitude, west= West_longitude,
@@ -40,9 +40,9 @@ geoRflow_cmip6_spatial_subset_download(model = "ACCESS-ESM1-5", timeframe = "his
 
 
 
-
+list.files(here("Rasters"))
 library(terra)
-raster <- terra::rast(here("Rasters","ACCESS-ESM1-5_tasmax_1990.nc"))
+raster <- terra::rast(here("Rasters","CNRM-ESM2-1_tasmax_1991.nc"))
 terra::plot(raster)
 
 ########### 

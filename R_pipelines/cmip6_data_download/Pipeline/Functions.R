@@ -77,18 +77,25 @@ geoRflow_cmip6_spatial_subset_download <- function(model, timeframe, ensemble, c
   time_params <- "&time_start=<YEAR>-01-01T00:00:00Z&time_end=<YEAR>-12-31T23:59:59Z"
   format_params <- "&accept=netcdf3&addLatLon=true"
   
+  # Array of suffixes to try
+  suffixes <- c("_gn_", "_gr_", "_gr1_")
+  
   # Loop through years and construct the URL for each file
   for (year in start_year:end_year) {
     # Replace <YEAR> with the actual year in the time parameters
     year_time_params <- gsub("<YEAR>", year, time_params)
     
-    # Construct the final URL
-    ncss_url <- paste0(ncss_base_url, climate_variable, "_day_", model, "_", timeframe, "_", ensemble, "_gn_", year, ".nc", spatial_params, year_time_params, format_params)
-    
-    # Download the file
-    file_name <- paste0(model, "_", climate_variable, "_", year, ".nc")
-    file_path <- file.path(output_folder, file_name)
-    download_file(ncss_url, file_path, timeout)
+    for (suffix in suffixes) {
+      # Construct the final URL with the current suffix
+      ncss_url <- paste0(ncss_base_url, climate_variable, "_day_", model, "_", timeframe, "_", ensemble, suffix, year, ".nc", spatial_params, year_time_params, format_params)
+      
+      # Download the file
+      file_name <- paste0(model, "_", climate_variable, "_", year, ".nc")
+      file_path <- file.path(output_folder, file_name)
+      if (download_file(ncss_url, file_path, timeout)) {
+        break  # Exit the loop if download is successful
+      }
+    }
   }
 }
 
@@ -97,7 +104,9 @@ download_file <- function(url, path, timeout) {
   tryCatch({
     download.file(url, path, mode = "wb")
     message("Downloaded: ", path)
+    return(TRUE)
   }, error = function(e) {
     message("Failed to download: ", path, "\nError: ", e$message)
+    return(FALSE)
   })
 }
