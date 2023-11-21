@@ -12,7 +12,7 @@ The function requires a number of inputs:
 - Day_Threshold is how many days in a row at the Temp_threshold indicates a heatwave
 - Variable is the number of the column in the Dataframe that you want to analyze, ie. MaxTemp or MeanTemp
 
-The function returns a data frome with columns titled x, y, and HeatwaveDays
+The function returns a dataframe with columns titled x, y, and HeatwaveDays
 
 - x and y are locations from the input Dataframe
 - HeatwaveDays indicates the number of days that location was in a heatwave
