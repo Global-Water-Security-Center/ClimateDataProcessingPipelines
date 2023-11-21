@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Python-based pipeline is designed for processing and analyzing climate data using Google Earth Engine. It focuses on calculating monthly normals (average values) for a specified band from satellite datasets within a given region of interest (ROI) and time period. The pipeline is tailored for researchers and data analysts working in the fields of climate science, environmental monitoring, and geospatial analysis.
+This Python-based pipeline is designed for processing and analyzing climate data using Google Earth Engine. It focuses on calculating monthly normals for a specified band from satellite datasets within a given region of interest (ROI) and time period. The pipeline is tailored for researchers and data analysts working in the fields of climate science, environmental monitoring, and geospatial analysis.
 
 ## Features
 
