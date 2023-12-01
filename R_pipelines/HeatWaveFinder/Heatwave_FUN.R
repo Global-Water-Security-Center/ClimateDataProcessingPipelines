@@ -28,7 +28,7 @@ Heatwaves<-function(Dataframe,Temp_threshold,Day_Threshold,Variable){
     combine$streak=combine$streak+1
     combine$streak[is.nan(combine$streak)]=0
     combine$streak[is.infinite(combine$streak)]=0
-    Heatwave=rbind(Heatwave,combine[which(combine$streak>=3),c("x","y","days","streak")])
+    Heatwave=rbind(Heatwave,combine[which(combine$streak>=Day_Threshold),c("x","y","days","streak")])
     yesterday=combine[,c("x","y","streak")]
     yesterday$yest_binary=yesterday$streak
   }
@@ -41,8 +41,8 @@ Heatwaves<-function(Dataframe,Temp_threshold,Day_Threshold,Variable){
   for (i in 1:length(Summary$x)){
     Grab=Heatwave[which(Heatwave$x==Summary$x[i]&Heatwave$y==Summary$y[i]),]
     for(j in 1:length(Grab$x)){
-      if(Grab$streak[j]==3){
-        Summary$HeatwaveDays[i]=Summary$HeatwaveDays[i]+3
+      if(Grab$streak[j]==Day_Threshold){
+        Summary$HeatwaveDays[i]=Summary$HeatwaveDays[i]+Day_Threshold
       }else{
         Summary$HeatwaveDays[i]=Summary$HeatwaveDays[i]+1
       }
